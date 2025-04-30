@@ -18,19 +18,29 @@ default_platform(:android)
 platform :android do
   desc "Deploy to Google Play"
   lane :beta do
+    # Build the AAB file
     gradle(
       task: "bundleRelease"  # Use bundleRelease to generate the AAB file
     )
 
+    # Build the APK file
+    gradle(
+      task: "assembleRelease"  # This will generate the APK in app/build/outputs/apk/release
+    )
+
+    # Upload the AAB to Google Play
     upload_to_play_store(
       track: "internal",  # or alpha/beta/production
       aab: "app/build/outputs/bundle/release/app-release.aab",  # Path to your AAB file
       json_key: "fastlane/play-store-key.json",
       package_name: "com.kah.CICDdemo",
-      changes_not_sent_for_review: true  # Keeps release in draft until manually published
+      changes_not_sent_for_review: true,  # Keeps release in draft until manually published
+      skip_upload_apk: true  # Skip uploading the APK
     )
   end
 end
+
+
 
 
 
