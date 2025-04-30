@@ -4,39 +4,54 @@ plugins {
 }
 
 android {
-    namespace 'com.example.CICDdemo'
+    namespace 'com.kah.CICDdemo'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.CICDdemo"
+        applicationId "com.kah.CICDdemo"
         minSdk 28
-        targetSdk 33
-        versionCode 1
+        targetSdk 34
+        versionCode 5
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Signing configuration for release builds
+    signingConfigs {
+        release {
+            // Path to your keystore file (stored outside the project folder)
+            storeFile file(project.hasProperty("KEYSTORE_FILE") ? project.KEYSTORE_FILE : "../keystore/my-upload-key.jks")
+            storePassword project.hasProperty("KEYSTORE_PASSWORD") ? project.KEYSTORE_PASSWORD : "" // Keystore password
+            keyAlias project.hasProperty("KEY_ALIAS") ? project.KEY_ALIAS : "" // Alias for the key in the keystore
+            keyPassword project.hasProperty("KEY_PASSWORD") ? project.KEY_PASSWORD : "" // Key password
+        }
+    }
+
     buildTypes {
         release {
+            // Sign the release build with the release signing config
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
     }
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

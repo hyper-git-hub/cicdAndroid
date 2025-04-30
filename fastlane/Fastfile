@@ -19,14 +19,18 @@ platform :android do
   desc "Deploy to Google Play"
   lane :beta do
     gradle(
-      task: "clean assembleRelease",  # Ensure you are building a release version
-      build_type: "Release"
+      task: "bundleRelease"  # Use bundleRelease to generate the AAB file
     )
 
     upload_to_play_store(
-      track: "internal",  # You can choose `alpha`, `beta`, or `production` track
-      json_key: "fastlane/play-store-key.json",  # Path to the service account JSON file
-      package_name: "com.example.CICDdemo"  # Ensure the package name is correct
+      track: "internal",  # or alpha/beta/production
+      aab: "app/build/outputs/bundle/release/app-release.aab",  # Path to your AAB file
+      json_key: "fastlane/play-store-key.json",
+      package_name: "com.kah.CICDdemo",
+      changes_not_sent_for_review: true  # Keeps release in draft until manually published
     )
   end
 end
+
+
+

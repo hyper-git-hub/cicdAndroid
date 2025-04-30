@@ -1,4 +1,4 @@
-package com.example.CICDdemo
+package com.kah.CICDdemo
 
 import org.junit.Test
 
