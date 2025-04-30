@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+fastlane/play-store-key.json
+
