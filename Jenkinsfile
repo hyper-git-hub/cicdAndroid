@@ -9,20 +9,16 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "🔄 Checking out source code"
-                git credentialsId: '0dae4b11-d489-4f03-a4df-070facbd0a17', 
-                    url: 'https://github.com/Khawaja-Abdul-Haleem-ios/cicdAndroid.git', 
+                git credentialsId: '0dae4b11-d489-4f03-a4df-070facbd0a17',
+                    url: 'https://github.com/Khawaja-Abdul-Haleem-ios/cicdAndroid.git',
                     branch: 'main'
             }
         }
  
         stage('Install Dependencies') {
             steps {
-                echo "📦 Installing Fastlane and dependencies"
+                echo "📦 Skipping Fastlane install — already installed on agent"
                 sh '''
-                sudo apt-get update
-                sudo apt-get install -y ruby-full build-essential
-                sudo gem install fastlane -NV
- 
                 ./gradlew dependencies
                 '''
             }
