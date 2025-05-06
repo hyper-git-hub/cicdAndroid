@@ -2,7 +2,7 @@ pipeline {
     agent any
  
     environment {
-        GRADLE_BUILD_DIR = "./CICDdemo/app/build"  // Update if your project structure differs
+        GRADLE_BUILD_DIR = "./CICDdemo/app/build"  // Update if needed
     }
  
     stages {
@@ -19,9 +19,9 @@ pipeline {
             steps {
                 echo "📦 Installing Fastlane and dependencies"
                 sh '''
-                sudo apt-get update
-                sudo apt-get install -y ruby-full build-essential
-                sudo gem install fastlane -NV
+                apt-get update
+                apt-get install -y ruby-full build-essential
+                gem install fastlane -NV
  
                 ./gradlew dependencies
                 '''
