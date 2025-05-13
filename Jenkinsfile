@@ -30,7 +30,7 @@ pipeline {
                 sh '''
                     gem install --user-install fastlane -NV
                     export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"
-                    echo "Fastlane version: $(fastlane --version)"
+                    echo "✅ Fastlane version: $(fastlane --version)"
                 '''
             }
         }
