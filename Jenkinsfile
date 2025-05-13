@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         GRADLE_BUILD_DIR = "./CICDdemo/app/build"
+        PATH = "/usr/local/bin:$PATH"  // Ensure Fastlane is available globally
     }
 
     stages {
@@ -24,11 +25,26 @@ pipeline {
             }
         }
 
+        stage('Ensure Fastlane is Installed') {
+            steps {
+                echo "🚀 Checking Fastlane installation..."
+                sh '''
+                    if ! command -v fastlane &> /dev/null; then
+                        echo "Fastlane not found. Installing..."
+                        sudo gem install fastlane -NV
+                    else
+                        echo "✅ Fastlane is already installed."
+                    fi
+                '''
+            }
+        }
+
         stage('Build & Deploy') {
             steps {
                 echo "📱 Building and uploading Android app to Play Store..."
                 dir('CICDdemo') {
                     sh '''
+                        export PATH=/usr/local/bin:$PATH
                         /usr/local/bin/fastlane beta
                     '''
                 }
