@@ -18,9 +18,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo "📦 Installing Gradle dependencies..."
-                sh '''
-                    ./gradlew dependencies
-                '''
+                sh './gradlew dependencies'
             }
         }
 
