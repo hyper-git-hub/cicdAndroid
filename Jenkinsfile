@@ -24,11 +24,25 @@ pipeline {
             }
         }
 
+        stage('Install Fastlane') {
+            steps {
+                echo "🚀 Installing Fastlane locally for this pipeline run..."
+                sh '''
+                    gem install --user-install fastlane -NV
+                    export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"
+                    echo "Fastlane version: $(fastlane --version)"
+                '''
+            }
+        }
+
         stage('Build & Deploy') {
             steps {
                 echo "📱 Building and uploading Android app to Play Store..."
                 dir('CICDdemo') {
-                    sh '/usr/local/bin/fastlane beta'
+                    sh '''
+                        export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"
+                        fastlane beta
+                    '''
                 }
             }
         }
