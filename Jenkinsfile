@@ -39,7 +39,7 @@ pipeline {
             steps {
                 echo "📱 Building and uploading Android app to Play Store..."
                 dir('CICDdemo') {
-                    sh '''
+                    sh ''' 
                         export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"
                         fastlane beta
                     '''
