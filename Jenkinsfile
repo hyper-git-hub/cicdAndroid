@@ -24,13 +24,24 @@ pipeline {
             }
         }
 
+        stage('Debug Environment') {
+            steps {
+                echo "🐞 Debugging Environment Variables..."
+                sh '''
+                    echo "Current PATH: $PATH"
+                    which fastlane || echo "❌ Fastlane not found in PATH"
+                    ls -l /usr/local/bin/fastlane || echo "❌ Fastlane binary not found at /usr/local/bin/fastlane"
+                '''
+            }
+        }
+
         stage('Build & Deploy') {
             steps {
                 echo "📱 Building and uploading Android app to Play Store..."
                 dir('CICDdemo') {
                     sh '''
                         export PATH=/usr/local/bin:$PATH
-                        fastlane beta
+                        /usr/local/bin/fastlane beta
                     '''
                 }
             }
