@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GRADLE_BUILD_DIR = "./CICDdemo/app/build"
-        PATH = "/usr/local/bin:$PATH"  // Ensure Fastlane is available globally
+        PATH = "/usr/local/bin:$PATH"  // Ensure Fastlane is in PATH globally
     }
 
     stages {
